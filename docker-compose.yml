@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: ${PG_USER:-postgres}
       POSTGRES_PASSWORD: ${PG_PASSWORD:-mysecretpassword}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       # Runs once, the first time the container starts, and restores dvdrental.tar
       - ./init:/docker-entrypoint-initdb.d:ro
