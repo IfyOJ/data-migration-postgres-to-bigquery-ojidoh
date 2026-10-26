@@ -1,0 +1,39 @@
+{
+  "_comment": "Maps PostgreSQL data types (information_schema.data_type) to BigQuery types.",
+  "type_map": {
+    "smallint": "INT64",
+    "integer": "INT64",
+    "bigint": "INT64",
+    "numeric": "NUMERIC",
+    "real": "FLOAT64",
+    "double precision": "FLOAT64",
+    "character varying": "STRING",
+    "character": "STRING",
+    "text": "STRING",
+    "boolean": "BOOL",
+    "date": "DATE",
+    "timestamp without time zone": "DATETIME",
+    "timestamp with time zone": "TIMESTAMP",
+    "time without time zone": "TIME",
+    "bytea": "BYTES",
+    "uuid": "STRING",
+    "json": "JSON",
+    "jsonb": "JSON"
+  },
+  "special_cases": {
+    "USER-DEFINED": {
+      "bigquery_type": "STRING",
+      "note": "Custom enum types (e.g. film.rating / mpaa_rating) become plain strings."
+    },
+    "ARRAY": {
+      "bigquery_type": "STRING",
+      "mode": "REPEATED",
+      "note": "Arrays (e.g. film.special_features) become REPEATED fields."
+    },
+    "tsvector": {
+      "bigquery_type": null,
+      "action": "DROP",
+      "note": "Full-text search vectors (film.fulltext) have no BigQuery equivalent. Dropped."
+    }
+  }
+}

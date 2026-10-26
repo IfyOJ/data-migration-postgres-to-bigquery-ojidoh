@@ -1,0 +1,24 @@
+services:
+  postgres-source:
+    image: postgres:16
+    container_name: postgres-source
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-mysecretpassword}
+    ports:
+      - "5432:5432"
+    volumes:
+      # Runs once, the first time the container starts, and restores dvdrental.tar
+      - ./init:/docker-entrypoint-initdb.d:ro
+      # Put dvdrental.tar in data/source/ before running `docker compose up`
+      - ./data/source:/data:ro
+      # Keeps your database between restarts
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
