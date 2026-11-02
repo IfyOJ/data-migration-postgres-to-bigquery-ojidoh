@@ -21,3 +21,4 @@ data/source/*
 .vscode/
 .idea/
 .vscode/
+logs/
