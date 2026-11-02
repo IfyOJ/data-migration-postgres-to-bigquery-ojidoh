@@ -35,5 +35,25 @@
       "action": "DROP",
       "note": "Full-text search vectors (film.fulltext) have no BigQuery equivalent. Dropped."
     }
+  },
+  "column_overrides": {
+    "film": {
+      "rating": {
+        "action": "CAST",
+        "bigquery_type": "STRING",
+        "mode": "NULLABLE",
+        "reason": "Postgres enum mpaa_rating has no BigQuery equivalent; values (G, PG, PG-13, R, NC-17) kept as text."
+      },
+      "special_features": {
+        "action": "CAST",
+        "bigquery_type": "STRING",
+        "mode": "REPEATED",
+        "reason": "Postgres text[] array maps to a BigQuery REPEATED STRING field, preserving each feature as a separate value."
+      },
+      "fulltext": {
+        "action": "DROP",
+        "reason": "tsvector is a Postgres-only search index derived from title/description. BigQuery has its own SEARCH() function, so it is not migrated."
+      }
+    }
   }
 }
